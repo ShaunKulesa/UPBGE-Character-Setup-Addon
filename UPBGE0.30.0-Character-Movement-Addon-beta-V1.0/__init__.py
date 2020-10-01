@@ -263,5 +263,4 @@ def unregister():
     bpy.utils.unregister_class(BasicMovementPython)
     bpy.utils.unregister_class(FirstPersonCameraLogicBricks)
     
-if __name__ == "__main__":
-    register()
+
