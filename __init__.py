@@ -6,22 +6,15 @@ bl_info = {
      "author": "Shaun Kulesa and Shihab Al-Den", 
      "blender": (2,91,0), 
      }
-
 #Location
 class View3DPanel:
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = "Character"
 
-#IDK
-    @classmethod
-    def poll(cls, context):
-        return (context.object is not None)
-    
 class Movement(bpy.types.Operator):
     bl_idname = ".movement"
     bl_label = "Minimal Operator"
-    
     #Function
     def execute(self, context):
         play = bpy.context.object
@@ -110,8 +103,7 @@ class Movement(bpy.types.Operator):
 class FirstPersonCamera(bpy.types.Operator):
     bl_idname = ".first_person_camera"
     bl_label = "Minimal Operator"
-    
-     def execute(self, context):
+    def execute(self, context):
         bpy.ops.object.camera_add()
         cam = bpy.context.object
         cam.rotation_euler = (7.84, 0, 0)
@@ -145,8 +137,7 @@ class FirstPersonCamera(bpy.types.Operator):
 class CharacterShell(bpy.types.Operator):
     bl_idname = ".character_shell"
     bl_label = "Minimal Operator"
-    
-     def execute(self, context):
+    def execute(self, context):
         bpy.ops.object.camera_add()
         cam = bpy.context.object
         cam.rotation_euler = (7.84, 0, 0)
@@ -183,6 +174,7 @@ class CharacterShell(bpy.types.Operator):
         player.name = 'Player_Shell'
 
         player.game.physics_type = "RIGID_BODY"
+        player.game.use_collision_bounds = True
 
         #Keyboard_Sensors
         bpy.ops.logic.sensor_add(type="KEYBOARD",name='Forward',object=player.name)
@@ -266,40 +258,40 @@ class CharacterShell(bpy.types.Operator):
         cam.parent = player
         player.scale = (1, 1, 2)
         return {"FINISHED"}
-     
+
+        
+        
 class PanelOne(View3DPanel, bpy.types.Panel):
     bl_idname = "VIEW3D_PT_test_1"
     bl_label = "Character Setup"
     #All_of_the_stuff 
-    
     def draw(self, context):
-     layout = self.layout
-     #First_Person_Label
-     layout.label(text="Character Movement:")
-     row = layout.row()
-     row.scale_y = 1.0
-     #Basic_Movement_Button_Logic_Bricks
-     row.operator(".movement", text="Movement")
-     row = layout.row()
-     row.scale_y = 1.0
-     #First_Person_Label
-     layout.label(text="Camera:")
-     row = layout.row()
-     row.scale_y = 1.0
-     #camera
-     row.operator(".first_person_camera", text="First Person Camera")
-     row = layout.row()
-     row.scale_y = 1.0
-
-     #Character Label
-     layout.label(text="Character:")
-     row = layout.row()
-     row.scale_y = 1.0
-     #camera
-     row.operator(".character_shell", text="Character Collision Shell")
-     row = layout.row()
-     row.scale_y = 1.0
-
+        layout = self.layout
+        #First_Person_Label
+        layout.label(text="Character Movement:")
+        row = layout.row()
+        row.scale_y = 1.0
+        #Basic_Movement_Button_Logic_Bricks
+        row.operator(".movement", text="Movement")
+        row = layout.row()
+        row.scale_y = 1.0
+        #First_Person_Label
+        layout.label(text="Camera:")
+        row = layout.row()
+        row.scale_y = 1.0
+        #camera
+        row.operator(".first_person_camera", text="First Person Camera")
+        row = layout.row()
+        row.scale_y = 1.0
+        
+        #Character Label
+        layout.label(text="Character:")
+        row = layout.row()
+        row.scale_y = 1.0
+        #camera
+        row.operator(".character_shell", text="Character Collision Shell")
+        row = layout.row()
+        row.scale_y = 1.0
 #Register_Panel
 bpy.utils.register_class(PanelOne)
 
@@ -312,3 +304,6 @@ def unregister():
     bpy.utils.unregister_class(Movement)
     bpy.utils.unregister_class(FirstPersonCamera)
     bpy.utils.unregister_class(CharacterShell)
+
+
+
